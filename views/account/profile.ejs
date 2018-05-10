@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HowApp Admin User Profile</title>
+  <link rel='shortcut icon', href='/favicon.png'>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+  <% include ../partials/header %>
+  <br>
+  <% include ../partials/flash %>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+<h3>Profile Information</h3>
+<form action="/account/profile" method="POST">
+  <input type="hidden" name="_csrf" value="<%= _csrf %>">
+
+  <div class="form-group">
+  <label for="email">Email</label>
+  <input type="email" name="email" class="form-control" id="email" value="<%= user.email %>">
+  </div>
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" name="name" class="form-control" id="name" value="<%= user.profile.name %>">
+  </div>
+
+  <div class="form-group">
+    <label>Gender</label>
+    <table class="table">
+    <tr><td><label><input type="radio" class="form-control" name="gender" value="male" data-toggle="radio" <% if(user.profile.gender=="male"){ %> checked="checked" <% } %>>Male</label></td>
+    <td><label><input type="radio" class="form-control" name="gender" value="female" data-toggle="radio" <% if(user.profile.gender=="female"){ %> checked="checked" <% } %>>Female</label></td>
+    <td><label><input type="radio" class="form-control" name="gender" value="other" data-toggle="radio" <% if(user.profile.gender=="other"){ %> checked="checked" <% } %>>Others</label></td></tr>
+    </table>
+  </div>
+
+  <div class="form-group">
+      <label for="location">Location</label>
+      <input type="text" name="location" class="form-control" id="location" value="<%= user.profile.location %>">
+  </div>
+
+  <div class="form-group">
+      <label for="website">Website</label>
+      <input type="text" name="website" class="form-control" id="website" value="<%= user.profile.website %>">
+  </div>
+
+  <div class="form-group">
+      <label>Gravatar</label>
+      <img src="<%= user.gravatar() %>" class="profile" width="100", height="100">
+  </div>
+
+  <div class="form-group">      
+     <button type="submit" class="btn btn-primary">Update Profile <i class="fa fa-pencil"></i></button>
+  </div>
+</form>
+      </div>
+      <div class="col-sm-6">
+          <h3>Change Password</h3>
+          <form action="/account/password" method="POST">
+            <input type="hidden" name="_csrf" value="<%= _csrf %>">
+          
+            <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password">
+            </div>
+          
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+            </div>
+          
+            <div class="form-group">      
+               <button type="submit" class="btn btn-primary">Change Password <i class="fa fa-lock"></i></button>
+            </div>
+          </form>
+                </div>
+
+                <div class="col-sm-6">
+                    <h3>Delete Account</h3>
+                    <p class="danger">You can delete your account, but keep in mind this action is irreversible.</p>
+                    <form action="/account/delete" method="POST">
+                      <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                      <div class="form-group">      
+                         <button type="submit" class="btn btn-danger">Change Password <i class="fa fa-trash"></i></button>
+                      </div>
+                    </form>
+                          </div>
+
+    </div>
+    </div>
+
+  <% include ../partials/footer %>
+  
+    <script src='/js/lib/jquery-3.1.1.min.js'></script>
+    <script src='/js/lib/bootstrap.min.js'></script>
+    <script src='/js/main.js'></script>    
+</body>
+</html>

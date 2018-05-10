@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HowApp Admin Posts</title>
+  <link rel='shortcut icon', href='/favicon.png'>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/custom.css">
+
+</head>
+<body>
+  <% include partials/header %> 
+
+ 
+  <% include partials/flash %>
+  <div class="container content">
+  <h1 class="pull-left">Posts</h1>
+<div class="pull-right">
+   
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-icon fa-search"></i></span>
+        <% if (search) { %>
+
+            <input type="text" value="<%= search  %>" id="inputSearch" class="form-control" placeholder="Start typing or hit enter" name="search">
+        
+        <% } else { %>
+
+            <input type="text" value="" id="inputSearch" class="form-control" placeholder="Start typing or hit enter" name="search">
+        
+        <% } %>
+        
+      </div>
+
+</div>
+
+  
+  <table class="table table-hover posts">
+        <tr>
+            <th><input type="hidden" id="_csrf" name="_csrf" value="<%= _csrf %>">
+                <input type="checkbox" name="check-all" class="check-all"></th>                
+            <th>Title</th>
+            <th>Author</th>
+            <th>Level</th>
+            <th>Categories</th>
+            <th>Type</th>
+            <th></th>
+            
+        </tr>
+    <% for(var i=0; i<posts.length; i++) {%>
+      <tr class="post">
+        <td class="check-others">
+                
+                <input type="checkbox" name="posts" value="<%= posts[i]._id %>"></td>
+          
+       <td><span><%= posts[i].title %></span></td>
+       <td><span><%= posts[i].author.name %></span></td>
+       <td><span><%= posts[i].level %></span></td>
+       <td><span><% if(posts[i].category){ %>
+        <%= posts[i].category.names[0].translation %>
+        <% } else { %>
+        NotAvailable     
+      <% } %>
+      </span></td>
+       <td>
+        <%if (posts[i].type=='VIDEO') { %>
+          <span class="label label-danger"><%= posts[i].type %></span>
+        <% } else if(posts[i].type=='AUDIO') { %>
+          <span class="label label-warning"><%= posts[i].type %></span>
+        <% } else if(posts[i].type=='URL') { %>
+          <span class="label label-info"><%= posts[i].type %></span>
+        <% } else if(posts[i].type=='TEXT') { %>
+          <span class="label label-success"><%= posts[i].type %></span>
+        <% } else { %>
+          <span class="label label-default"><%= posts[i].type %></span>        
+        <% } %>     
+       
+  </td>
+  <td>
+
+      <div class="btn-group" role="group">        
+        <button title="More.." type="button" class="btn btn-info view-post" data-toggle="modal" data-url="/post/<%= posts[i]._id %>" data-target="#myModal"><i class="fa fa-icon fa-ellipsis-h"></i></button>
+
+        <button title="Delete" type="button" class="btn btn-danger delete-post" data-url="/post/delete/<%= posts[i]._id %>"><i class="fa fa-icon fa-trash"></i></button>
+
+        
+        </div>
+
+  </td>
+      </tr>
+    <% } %>
+    </table>
+
+    <nav aria-label="Page navigation" class="text-right" style="float: right;">
+       
+        <% if (pages > 0) { %>
+          <ul class="pagination">
+              <% if (current == 1) { %>
+                  <li class="disabled"><a>First</a></li>
+              <% } else { %>
+                  <li><a href="/posts/1">First</a></li>
+              <% } %>
+              <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+              <% if (i !== 1) { %>
+                  <li class="disabled"><a>...</a></li>
+              <% } %>
+              <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                  <% if (i == current) { %>
+                      <li class="active"><a><%= i %></a></li>
+                  <% } else { %>
+                      <li><a href="/posts/<%= i %>"><%= i %></a></li>
+                  <% } %>
+                  <% if (i == Number(current) + 4 && i < pages) { %>
+                      <li class="disabled"><a>...</a></li>
+                  <% } %>
+              <% } %>
+              <% if (current == pages) { %>
+                  <li class="disabled"><a>Last</a></li>
+              <% } else { %>
+                  <li><a href="/posts/<%= pages %>">Last</a></li>
+              <% } %>
+          </ul>
+      <% } %>
+
+      </nav>
+      <p class="data-table-info text-left"><strong>Showing <%= range1 %> - <%= range2 %> of <%= count %> records</strong></p>
+
+  </div>
+
+  <!-- Trigger the modal with a button -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">View Post</h4>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+
+  <% include partials/footer %>  
+    <script src='/js/lib/jquery-3.1.1.min.js'></script>
+    <script src='/js/lib/bootstrap.min.js'></script>
+    <script src='/js/bootstrap-confirm-delete.js'></script>   
+    <script src='/js/main.js'></script>    
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#inputSearch').keyup(function (e) { 
+                if(this.value.length>2 || e.keyCode === 13) {
+                window.location = '/posts/search/'+this.value;
+                } if(this.value<1){
+                    window.location = '/posts';
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">      
+    $('.view-post').on('click', function(e){
+    e.preventDefault();
+    $('.modal-body').empty();
+    $('.modal-body').html('Loading data...').load($(this).attr('data-url'));
+    });
+     </script>
+     <script type="text/javascript">
+     $('.check-all').click(function() {
+    if ($(this).is(':checked')) {
+        $('.check-others input').attr('checked', true);
+    } else {
+        $('.check-others input').attr('checked', false);
+    }
+});
+</script>
+<script type="text/javascript">
+
+$('.delete-post').bootstrap_confirm_delete({
+    
+callback: function(event){
+     var link = event.data.originalObject.attr('data-url');    
+    var button = event.data.originalObject;
+     button.closest( 'tr' ).remove();
+        $.ajax(
+                {
+                   url: link,
+                   type: 'POST',
+                   data: {_csrf: $('#_csrf').val()},
+                });
+    
+}
+});
+</script>
+</body>
+</html>

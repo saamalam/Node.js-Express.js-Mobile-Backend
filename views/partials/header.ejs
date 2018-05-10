@@ -1,0 +1,56 @@
+<nav class="navbar navbar-default navbar-fixed">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Howapp Admin</a>
+    </div>
+    <% if(user) { %>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Dashboard</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Users
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/users">Users</a></li>
+          
+          <li><a href="/users/settings">User Settings</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Posts
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="/categories">Categories</a></li>
+            
+          <li><a href="/posts">Posts</a></li>
+          
+          <li><a href="/posts/settings">Post Settings</a></li>
+        </ul>
+      </li>
+      <li><a href="/settings">Settings</a></li>
+      <li><a href="/status" target="_blank">Server Status</a></li>
+    </ul>
+    <% } %>
+    <ul class="nav navbar-nav navbar-right">
+      <% if(user) { %>      
+      
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              
+                <% if (user.profile.picture) { %>
+                <img alt="<%= user.profile.name %>" src="<%= user.profile.picture %>">
+                <% } else { %>
+                <img src="<%= user.gravatar(60) %>" alt="<%= user.profile.name %>">
+              <% } %>
+              <span><%= user.profile.name || user.email || user.id %></span>
+
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/account">My Account</a></li>
+              <li><a href="/logout">Logout</a></li>
+              
+            </ul>
+          </li>
+        <% }  %>
+            </ul>
+  </div>
+</nav>

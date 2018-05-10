@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HowApp Admin Dashboard</title>
+  <link rel='shortcut icon', href='/favicon.png'>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/custom.css">
+
+</head>
+<body>
+  <% include partials/header %>
+  <br>
+  <% include partials/flash %>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <canvas id="posts-per-month" ></canvas>
+      </div>
+      <div class="col-sm-6">
+          <canvas id="top-interests" ></canvas>
+        </div>
+ 
+      <div class="col-sm-6">
+        <canvas id="top-categories" ></canvas>
+      </div>
+      <div class="col-sm-6">
+          <canvas id="most-liked"></canvas>
+        </div>
+  </div>
+</div>
+
+
+  <% include partials/footer %>
+  
+    <script src='/js/lib/jquery-3.1.1.min.js'></script>
+    <script src='/js/lib/bootstrap.min.js'></script>
+    <script src='/js/main.js'></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById("posts-per-month").getContext('2d');
+        new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+    datasets: [{ 
+        data: [86,214,70,120,500,111,833,50,455,1500],       
+        backgroundColor: 'rgba(23, 206, 186, 0.2)',
+        borderColor: 'rgba(23, 206, 186, 1)',
+        borderWidth: 1
+
+      }]
+  },
+  options: {
+    legend: {
+                   display: false
+                     },
+    title: {
+      display: true,
+      text: 'Number of Posts by Month'
+    }
+  }
+});
+        </script>
+        <script>
+            var ctx = document.getElementById("top-interests").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                      label: '',
+                        data: [12, 19, 3, 5, 2, 3, 14, 45, 66, 30, 45, 55],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(160,99,122,0.2)',
+                            'rgba(56, 162, 225, 0.2)',
+                            'rgba(23, 206, 186, 0.2)',
+                            'rgba(211, 192, 190, 0.2)',
+                            'rgba(230, 102, 155, 0.2)',
+                            'rgba(155,199,122,0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(160,99,122,1)',
+                            'rgba(56, 162, 225, 1)',
+                            'rgba(23, 206, 186, 1)',
+                            'rgba(211, 192, 190, 1)',
+                            'rgba(230, 102, 155, 1)',
+                            'rgba(155,199,122,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                  legend: {
+                   display: false
+                     },
+                  title: {
+                    display: true,
+                    text: 'Top Interests'
+                    }
+                }
+            });
+            </script>
+            <script>
+                var ctx = document.getElementById("top-categories").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        datasets: [{
+                          label: '',
+                            data: [12, 19, 3, 5, 2, 3, 14, 45, 66, 30, 45, 55],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(160,99,122,0.2)',
+                                'rgba(56, 162, 225, 0.2)',
+                                'rgba(23, 206, 186, 0.2)',
+                                'rgba(211, 192, 190, 0.2)',
+                                'rgba(230, 102, 155, 0.2)',
+                                'rgba(155,199,122,0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(160,99,122,1)',
+                                'rgba(56, 162, 225, 1)',
+                                'rgba(23, 206, 186, 1)',
+                                'rgba(211, 192, 190, 1)',
+                                'rgba(230, 102, 155, 1)',
+                                'rgba(155,199,122,1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                      legend: {
+                       display: false
+                         },
+                      title: {
+                        display: true,
+                        text: 'Top Categories'
+                        }
+                    }
+                });
+                </script>
+                <script>
+                    var ctx = document.getElementById("most-liked").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [{
+                              label: '',
+                                data: [12, 19, 3, 5, 2, 3, 14, 45, 66, 30, 45, 55],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)',
+                                    'rgba(160,99,122,0.2)',
+                                    'rgba(56, 162, 225, 0.2)',
+                                    'rgba(23, 206, 186, 0.2)',
+                                    'rgba(211, 192, 190, 0.2)',
+                                    'rgba(230, 102, 155, 0.2)',
+                                    'rgba(155,199,122,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(160,99,122,1)',
+                                    'rgba(56, 162, 225, 1)',
+                                    'rgba(23, 206, 186, 1)',
+                                    'rgba(211, 192, 190, 1)',
+                                    'rgba(230, 102, 155, 1)',
+                                    'rgba(155,199,122,1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                          legend: {
+                           display: false
+                             },
+                          title: {
+                            display: true,
+                            text: 'Most Liked Posts'
+                            }
+                        }
+                    });
+                    </script>
+</body>
+</html>

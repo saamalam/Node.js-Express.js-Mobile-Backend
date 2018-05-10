@@ -1,0 +1,30 @@
+<div class="container">
+<% if (messages.errors) { %>  
+  <div class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <% for(var i=0; i<messages.errors.length; i++) { %>
+      <span><%= messages.errors[i].msg  %></span>
+      <% } %>
+  </div>  
+<% } %>
+<% if (messages.info) { %>
+  <div class="alert alert-info alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+    <% for(var i=0; i<messages.info.length; i++) { %>
+      <span><%= messages.info[i].msg  %></span>
+      <% } %>
+
+  </div> 
+<% } %>
+<% if (messages.success) { %>
+  <div class="alert alert-info alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    
+    <% for(var i=0; i<messages.success.length; i++) { %>
+      <span><%= messages.success[i].msg  %></span>
+      <% } %>
+    
+  </div> 
+<% } %>
+</div>

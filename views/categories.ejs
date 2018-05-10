@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HowApp Admin Categories</title>
+  <link rel='shortcut icon', href='/favicon.png'>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/custom.css">
+
+</head>
+<body>
+  <% include partials/header %> 
+
+ 
+  <% include partials/flash %>
+  <div class="container content">
+  <h1 class="pull-left">Categories</h1>
+ 
+  <table class="table table-hover posts">
+        <tr>
+            <th><input type="hidden" id="_csrf" name="_csrf" value="<%= _csrf %>">
+                <input type="checkbox" name="check-all" class="check-all"></th>                
+            <th>Title</th>
+            <th>Language</th>
+            <th></th>
+            
+            
+        </tr>
+    <% for(var i=0; i<categories.length; i++) {%>
+      <tr class="post">
+        <td class="check-others">
+                
+                <input type="checkbox" name="posts" value="<%= categories[i]._id %>"></td>
+          
+       <td><span><%= categories[i].names[0].translation %></span></td>
+       <td><span><%= categories[i].names[0].language %></span></td>
+       
+  <td>
+
+      <div class="btn-group" role="group">     
+
+        <button title="Delete" type="button" class="btn btn-danger delete-cat" data-url="/category/delete/<%= categories[i]._id %>"><i class="fa fa-icon fa-trash"></i></button>
+
+        
+        </div>
+
+  </td>
+      </tr>
+    <% } %>
+    </table>
+
+    <nav aria-label="Page navigation" class="text-right" style="float: right;">
+       
+        <% if (pages > 0) { %>
+          <ul class="pagination">
+              <% if (current == 1) { %>
+                  <li class="disabled"><a>First</a></li>
+              <% } else { %>
+                  <li><a href="/posts/1">First</a></li>
+              <% } %>
+              <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+              <% if (i !== 1) { %>
+                  <li class="disabled"><a>...</a></li>
+              <% } %>
+              <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                  <% if (i == current) { %>
+                      <li class="active"><a><%= i %></a></li>
+                  <% } else { %>
+                      <li><a href="/posts/<%= i %>"><%= i %></a></li>
+                  <% } %>
+                  <% if (i == Number(current) + 4 && i < pages) { %>
+                      <li class="disabled"><a>...</a></li>
+                  <% } %>
+              <% } %>
+              <% if (current == pages) { %>
+                  <li class="disabled"><a>Last</a></li>
+              <% } else { %>
+                  <li><a href="/categories/<%= pages %>">Last</a></li>
+              <% } %>
+          </ul>
+      <% } %>
+
+      </nav>
+      <p class="data-table-info text-left"><strong>Showing <%= range1 %> - <%= range2 %> of <%= count %> records</strong></p>
+
+  </div>
+
+  <% include partials/footer %>  
+    <script src='/js/lib/jquery-3.1.1.min.js'></script>
+    <script src='/js/lib/bootstrap.min.js'></script>
+    <script src='/js/bootstrap-confirm-delete.js'></script>   
+    <script src='/js/main.js'></script>    
+
+     <script type="text/javascript">
+     $('.check-all').click(function() {
+    if ($(this).is(':checked')) {
+        $('.check-others input').attr('checked', true);
+    } else {
+        $('.check-others input').attr('checked', false);
+    }
+});
+</script>
+<script type="text/javascript">
+
+$('.delete-cat').bootstrap_confirm_delete({
+    
+callback: function(event){
+     var link = event.data.originalObject.attr('data-url');    
+     var button = event.data.originalObject;
+     button.closest( 'tr' ).remove();
+        $.ajax(
+                {
+                   url: link,
+                   type: 'POST',
+                   data: {_csrf: $('#_csrf').val()},
+                });
+    
+}
+});
+</script>
+</body>
+</html>

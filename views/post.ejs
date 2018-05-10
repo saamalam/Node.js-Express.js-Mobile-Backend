@@ -1,0 +1,42 @@
+<table class="table table-bordered table-hover">
+  
+    <tr>
+      <th>Title:</th>
+      <td><%= post.title %></td>
+    </tr>
+    <tr>
+      <th>Description:</th>
+      <td><%= post.description %></td>
+    </tr>
+    <tr>
+      <th>Level:</th>
+      <td><%= post.level %></td>
+    </tr>
+    <tr>
+      <th>Author:</th>
+      <td><%= post.author.name %></td>
+    </tr>
+    <tr>
+      <th>Category:</th>
+      <td><%= post.category.names[0].translation %></td>
+    </tr>
+    <tr>
+      <th>Type:</th>
+      <td>
+        <%if (post.type=='VIDEO') { %>
+          <span class="label label-danger"><%= post.type %></span>
+        <% } else if(post.type=='AUDIO') { %>
+          <span class="label label-warning"><%= post.type %></span>
+        <% } else if(post.type=='URL') { %>
+          <span class="label label-info"><%= post.type %></span>
+        <% } else if(post.type=='TEXT') { %>
+          <span class="label label-success"><%= post.type %></span>
+        <% } else { %>
+          <span class="label label-default"><%= post.type %></span>        
+        <% } %>    
+      </td>
+    </tr>
+  
+</table>
+
+   
